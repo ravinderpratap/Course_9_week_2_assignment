@@ -210,14 +210,37 @@ $(document).ready(function () {
 <p>Create a web page using R Markdown that features a map created with Leaflet.</p>
 <p>Host your webpage on either GitHub Pages, RPubs, or NeoCities.</p>
 <p>Your webpage must contain the date that you created the document, and it must contain a map created with Leaflet.</p>
+<pre class="r"><code>library(leaflet)
+
+lat &lt;- c(28.444957, 27.024967, 28.054947, 28.474977, 28.094937)
+lng &lt;- c(77.321260, 77.321350, 76.323240, 76.325270, 77.327280)
+pop &lt;- c(1289,490, 700, 230, 650)
+area &lt;- c('Sector 30', 'Sector 29', 'Sector 19', 'Sector 28', 'Sector 88')
+
+my_df &lt;- data.frame(lat, lng, pop, area)</code></pre>
+<ul>
+<li>Create a dataframe <code>my_df</code> to have latitude, longitude, Population and area name.</li>
+</ul>
 <p><strong>Next we will show the area wise population in Millions</strong></p>
 </div>
-<div id="interative-plot-showing-the-areawise-population" class="section level2">
-<h2><span style="color:dark grey"> Interative Plot showing the Areawise Population </span></h2>
+<div id="interactive-plot-showing-the-areawise-population" class="section level2">
+<h2><span style="color:dark grey"> Interactive Plot showing the Areawise Population </span></h2>
 <div id="may-28-2019" class="section level3">
 <h3>May 28, 2019</h3>
-<div id="htmlwidget-35ff14f72e2cd8c614ea" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-35ff14f72e2cd8c614ea">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[28.444957,27.024967,28.054947,28.474977,28.094937],[77.32126,77.32135,76.32324,76.32527,77.32728],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Sector 30 <br> Population in Millions:  1289","Sector 29 <br> Population in Millions:  490","Sector 19 <br> Population in Millions:  700","Sector 28 <br> Population in Millions:  230","Sector 88 <br> Population in Millions:  650"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircles","args":[[28.444957,27.024967,28.054947,28.474977,28.094937],[77.32126,77.32135,76.32324,76.32527,77.32728],[25780,9800,14000,4600,13000],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":1,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2},["Area Name is: Sector 30","Area Name is: Sector 29","Area Name is: Sector 19","Area Name is: Sector 28","Area Name is: Sector 88"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]}],"limits":{"lat":[27.024967,28.474977],"lng":[76.32324,77.32728]}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>my_map &lt;- leaflet(my_df) %&gt;% 
+  addTiles() %&gt;% 
+  addMarkers(lng=my_df$lng, 
+           lat=my_df$lat, 
+           popup=paste(my_df$area, &quot;&lt;br&gt; Population in Millions: &quot;,
+                       formatC(my_df$pop, format = &quot;d&quot;)))  %&gt;%
+  addCircles(lng    = my_df$lng, 
+             lat    = my_df$lat, 
+             weight = 1, 
+             radius = (my_df$pop * 20), 
+             popup  = paste(&quot;Area Name is:&quot;,strwrap(my_df$area))) 
+my_map</code></pre>
+<div id="htmlwidget-ad06182767e31acc869e" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ad06182767e31acc869e">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[28.444957,27.024967,28.054947,28.474977,28.094937],[77.32126,77.32135,76.32324,76.32527,77.32728],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Sector 30 <br> Population in Millions:  1289","Sector 29 <br> Population in Millions:  490","Sector 19 <br> Population in Millions:  700","Sector 28 <br> Population in Millions:  230","Sector 88 <br> Population in Millions:  650"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircles","args":[[28.444957,27.024967,28.054947,28.474977,28.094937],[77.32126,77.32135,76.32324,76.32527,77.32728],[25780,9800,14000,4600,13000],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":1,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2},["Area Name is: Sector 30","Area Name is: Sector 29","Area Name is: Sector 19","Area Name is: Sector 28","Area Name is: Sector 88"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]}],"limits":{"lat":[27.024967,28.474977],"lng":[76.32324,77.32728]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 

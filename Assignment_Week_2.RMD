@@ -17,9 +17,7 @@ Host your webpage on either GitHub Pages, RPubs, or NeoCities.
 
 Your webpage must contain the date that you created the document, and it must contain a map created with Leaflet. 
 
-**Next we will show the area wise population in Millions**
-
-```{r echo=FALSE}
+```{r echo=TRUE}
 library(leaflet)
 
 lat <- c(28.444957, 27.024967, 28.054947, 28.474977, 28.094937)
@@ -30,12 +28,16 @@ area <- c('Sector 30', 'Sector 29', 'Sector 19', 'Sector 28', 'Sector 88')
 my_df <- data.frame(lat, lng, pop, area)
 ```
 
-## <span style="color:dark grey"> Interative Plot showing the Areawise Population </span>
+- Create a dataframe `my_df` to have latitude, longitude, Population and area name.
+
+**Next we will show the area wise population in Millions**
+
+## <span style="color:dark grey"> Interactive Plot showing the Areawise Population </span>
 
 
 ###`r format(Sys.Date(),'%B %d, %Y')` 
 
-```{r pressure, echo=FALSE}
+```{r pressure, echo=TRUE}
 my_map <- leaflet(my_df) %>% 
   addTiles() %>% 
   addMarkers(lng=my_df$lng, 
