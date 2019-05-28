@@ -1,0 +1,52 @@
+---
+title: "Interactive Maps"
+author: "RP"
+date: "May 28, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## <span style="color:dark grey"> Introduction </span>
+
+Create a web page using R Markdown that features a map created with Leaflet.
+
+Host your webpage on either GitHub Pages, RPubs, or NeoCities.
+
+Your webpage must contain the date that you created the document, and it must contain a map created with Leaflet. 
+
+**Next we will show the area wise population in Millions**
+
+```{r echo=FALSE}
+library(leaflet)
+
+lat <- c(28.444957, 27.024967, 28.054947, 28.474977, 28.094937)
+lng <- c(77.321260, 77.321350, 76.323240, 76.325270, 77.327280)
+pop <- c(1289,490, 700, 230, 650)
+area <- c('Sector 30', 'Sector 29', 'Sector 19', 'Sector 28', 'Sector 88')
+
+my_df <- data.frame(lat, lng, pop, area)
+```
+
+## <span style="color:dark grey"> Interative Plot showing the Areawise Population </span>
+
+
+###`r format(Sys.Date(),'%B %d, %Y')` 
+
+```{r pressure, echo=FALSE}
+my_map <- leaflet(my_df) %>% 
+  addTiles() %>% 
+  addMarkers(lng=my_df$lng, 
+           lat=my_df$lat, 
+           popup=paste(my_df$area, "<br> Population in Millions: ",
+                       formatC(my_df$pop, format = "d")))  %>%
+  addCircles(lng    = my_df$lng, 
+             lat    = my_df$lat, 
+             weight = 1, 
+             radius = (my_df$pop * 20), 
+             popup  = paste("Area Name is:",strwrap(my_df$area))) 
+my_map
+```
+
