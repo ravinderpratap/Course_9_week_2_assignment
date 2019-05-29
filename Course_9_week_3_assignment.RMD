@@ -1,0 +1,60 @@
+---
+title: "Motor Trends from MTCARS Dataset"
+author: "RP"
+date: "May 29, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Motor Trends from MTCARS Dataset
+
+1. We will check MPG on Manual V/S Automatic transmission.
+2. We will check MPG on Cylinder with number of gears.
+
+Below are the elements in **mtcars** dataset.
+
+   - mpg	  :  Miles/(US) gallon
+   - cyl	  :  Number of cylinders
+   - disp   :  Displacement (cu.in.)
+   - hp	    :  Gross horsepower
+   - drat   :  Rear axle ratio
+   - wt	    :  Weight (1000 lbs)
+   - qsec   :  1/4 mile time
+   - vs	    :  Engine (0 = V-shaped, 1 = straight)
+   - am	    :  Transmission (0 = automatic, 1 = manual)
+   - gear   :  Number of forward gears
+   - carb   :  Number of carburetors
+
+## <span style="color:grey"> Cars Mileage highlighting Automatic and Manual Transmission </span>
+###`r format(Sys.Date(),'%B %d, %Y')` 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(plotly)
+data("mtcars")
+
+mtcars$cyl <- as.factor(mtcars$cyl)
+mtcars$gear <- as.factor(mtcars$gear)
+mtcars$carb <- as.factor(mtcars$carb)
+mtcars$am <- as.factor(mtcars$am)
+mtcars$am <- ifelse(mtcars$am == 0,"Automatic", "Manual")
+mtcars$car <- rownames(mtcars)
+
+plot_ly(mtcars, x=mtcars$car, y=mtcars$mpg, mode="markers", color = mtcars$am) 
+```
+
+
+## <span style="color:grey"> Mileage based on the weight of Car and horse power  </span>
+###`r format(Sys.Date(),'%B %d, %Y')` 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(plotly)
+
+plot_ly(mtcars , x=mtcars$wt, y=mtcars$mpg, mode="markers", color = as.factor(mtcars$cyl), 
+        size = (mtcars$hp))
+ 
+```
+
+## <span style="color:grey"> Thankyou  </span>
+
+
